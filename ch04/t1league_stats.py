@@ -30,6 +30,7 @@ for span_tag in span_tags:
     if span_tag.get_attribute('data-v-87c52ad6') == '':
         span_text = span_tag.text.replace('\n', '')
         print(span_text, end=', ')
+print()
 
 # process tbody
 tbody_tag = table_element.find_element(By.TAG_NAME, 'tbody')
