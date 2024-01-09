@@ -23,11 +23,25 @@ select.select_by_visible_text(option_text)
 # Find the dropdown element by its ID, name, XPath, or other suitable locators
 table_id = "vgt-table"  # Replace with the actual locator
 table_element = driver.find_element(By.ID, table_id)
-tr_tags = table_element.find_elements(By.TAG_NAME, "tr")
+# process thead
+thead_tag = table_element.find_element(By.TAG_NAME, 'thead')
+span_tags = thead_tag.find_elements(By.TAG_NAME, 'span')
+for span_tag in span_tags:
+    if span_tag.get_attribute('data-v-87c52ad6') == '':
+        span_text = span_tag.text.replace('\n', '')
+        print(span_text, end=', ')
+
+# process tbody
+tbody_tag = table_element.find_element(By.TAG_NAME, 'tbody')
+tr_tags = tbody_tag.find_elements(By.TAG_NAME, "tr")
 for tr_tag in tr_tags:
     td_tags = tr_tag.find_elements(By.TAG_NAME, "td")
-    for td_tag in td_tags:
-        print(td_tag.text, end=', ')
+    for idx, td_tag in enumerate(td_tags):
+        if idx == 1:
+            img_tag = td_tag.find_element(By.TAG_NAME, "img")
+            print(img_tag.get_attribute('src'), end=', ')
+        else:
+            print(td_tag.text, end=', ')
     print()
 
 # Wait for a moment to see the change (you may need to adjust this based on the webpage)
